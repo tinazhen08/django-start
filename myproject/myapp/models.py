@@ -1,18 +1,58 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.postgres.fields import ArrayField
+import uuid
 
 # Create your models here.
-class Users(AbstractUser):
-  class Types(models.TextChoices):
-    ADMIN = "ADMIN", "Admin"
-    USER = "USER", "User"
+class Role(models.Model):
+  USER = 1
+  ADMIN = 2
 
-  type = models.CharField(max_length=20, choices=Types.choices, default=Types.USER)
+  ROLE_CHOICES = ((USER, 'user'), (ADMIN, 'admin'))
 
-  usersname = models.CharField(max_length=255, null=False, unique=True) #text fields with max characters
-  email = models.EmailField(null=False, unique=True)
-  password = models.CharField(max_length=255, null=False)
+  id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
 
   def __str__(self):
-    return self.username
+    return self.get_id_display()
+
+class Users(AbstractUser):
+  role = models.ForeignKey(Role)
+  usersname = models.CharField(max_length=255, null=False, unique=True) #text fields with max characters
+  email = models.EmailField(null=False, unique=True)
+  #password = models.CharField(max_length=255, null=False)
+
+  USERNAME_FIELDS = 'email'
+  REQUIRED_FIELDS = ['username']
+
+  def __str__(self):
+    return "{}".format(self.email)
+
+class Types(models.Model):
+  MULTIPLE_CHOICE = 1
+  TRUE_OR_FALSE = 2 
+  DROPDOWN = 3 #fill in the blank but without typing
+  NUMERICAL = 4
+
+  TYPE_CHOICES = ((MULTIPLE_CHOICE, 'multiple choice'), (TRUE_OR_FALSE, ' true or false'), (DROPDOWN, 'dropdown'), (NUMERICAL, 'numerical'))
+
   
+  id = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, primary_key=True)
+
+  def __str__(self):
+    return self.get_id_display()
+
+class Quizzes(models.Model):
+  uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+  title = models.CharField(max_length=255, null=False)
+  types = models.ManyToManyField(Types, null=False)
+  creator = models.ForeignKey(Users, null=False)
+
+  def __str__(self):
+    return self.uuid_id
+
+class Questions(models.Model):
+  uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+  question = models.CharField(max_length=255, null=False)
+  answer = ArrayField(models.CharField(max_length=255), blank=False, default=list)
+  incorrect = ArrayField(models.CharField(max_length=255), blank=True, default=list)
+  quiz = models.ForeignKey(Quizzes, null=False)
