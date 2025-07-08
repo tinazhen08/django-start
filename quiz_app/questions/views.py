@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-
-# HttpResponse - return input onto webpage
+from django.template import loader
 
 def questions(request):
-    return HttpResponse("Hello world!")
+  template = loader.get_template('myfirst.html')
+  return HttpResponse(template.render())
