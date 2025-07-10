@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'rest_auth'
 ]
 
-AUTH_USER_MODEL ='myapp.urls'
+AUTH_USER_MODEL ='myapp.ursers'
 
 REST_FRAMEWORK = {
   'DEFAULT_PERMISSION_CLASSES': (
