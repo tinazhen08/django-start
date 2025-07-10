@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.postgres.fields import ArrayField
+#from django.contrib.postgres.fields import ArrayField
 import uuid
 
 # Create your models here.
@@ -16,7 +16,7 @@ class Role(models.Model):
     return self.get_id_display()
 
 class Users(AbstractUser):
-  role = models.ForeignKey(Role)
+  role = models.ForeignKey(Role, on_delete=models.CASCADE)
   usersname = models.CharField(max_length=255, null=False, unique=True) #text fields with max characters
   email = models.EmailField(null=False, unique=True)
   #password = models.CharField(max_length=255, null=False)
@@ -44,8 +44,8 @@ class Types(models.Model):
 class Quizzes(models.Model):
   uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   title = models.CharField(max_length=255, null=False)
-  types = models.ManyToManyField(Types, null=False)
-  creator = models.ForeignKey(Users, null=False)
+  types = models.ManyToManyField(Types)
+  creator = models.ForeignKey(Users, null=False, on_delete=models.CASCADE)
 
   def __str__(self):
     return self.uuid_id
@@ -53,6 +53,9 @@ class Quizzes(models.Model):
 class Questions(models.Model):
   uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   question = models.CharField(max_length=255, null=False)
-  answer = ArrayField(models.CharField(max_length=255), blank=False, default=list)
-  incorrect = ArrayField(models.CharField(max_length=255), blank=True, default=list)
-  quiz = models.ForeignKey(Quizzes, null=False)
+  answer = models.JSONField(default=list)
+  incorrect = models.JSONField(default=list, null=True)
+  quiz = models.ForeignKey(Quizzes, null=False, on_delete=models.CASCADE)
+
+  def __str__(self):
+    return self.uuid_id
