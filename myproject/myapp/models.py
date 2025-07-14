@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 import uuid
 
 # Create your models here.
-class Role(models.Model):
+""" class Role(models.Model):
   USER = 1
   ADMIN = 2
 
@@ -14,10 +14,15 @@ class Role(models.Model):
 
   def __str__(self):
     return self.get_id_display()
-
+ """
 class User(AbstractUser):
-  role = models.ForeignKey(Role, on_delete=models.CASCADE)
-  usersname = models.CharField(max_length=255, null=False, unique=True) #text fields with max characters
+  USER = 1
+  ADMIN = 2
+
+  ROLE_CHOICES = ((USER, 'user'), (ADMIN, 'admin'))
+
+  role = models.CharField(choices=ROLE_CHOICES, null=False)
+  username = models.CharField(max_length=255, null=False, unique=True) #text fields with max characters
   email = models.EmailField(null=False, unique=True)
   #password = models.CharField(max_length=255, null=False)
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import User, Types, Quizzes, Questions, Role
-from .serializers import UserSerializer, TypeSerializer, QuizSerializer, QuestionSerializer, RoleSerializer
+from .models import User, Types, Quizzes, Questions
+from .serializers import UserSerializer, TypeSerializer, QuizSerializer, QuestionSerializer
 
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
@@ -20,6 +20,6 @@ class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Questions.objects.all()
     serializer_class = QuestionSerializer
 
-class RoleViewSet(viewsets.ModelViewSet):
+""" class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
-    serializer_class = RoleSerializer
+    serializer_class = RoleSerializer """
