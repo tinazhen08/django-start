@@ -15,14 +15,14 @@ class Role(models.Model):
   def __str__(self):
     return self.get_id_display()
 
-class Users(AbstractUser):
+class User(AbstractUser):
   role = models.ForeignKey(Role, on_delete=models.CASCADE)
   usersname = models.CharField(max_length=255, null=False, unique=True) #text fields with max characters
   email = models.EmailField(null=False, unique=True)
   #password = models.CharField(max_length=255, null=False)
 
-  USERNAME_FIELDS = 'email'
-  REQUIRED_FIELDS = ['username']
+  USERNAME_FIELD = 'email'
+  REQUIRED_FIELDS = ['username',]
 
   def __str__(self):
     return "{}".format(self.email)
@@ -45,7 +45,7 @@ class Quizzes(models.Model):
   uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   title = models.CharField(max_length=255, null=False)
   types = models.ManyToManyField(Types)
-  creator = models.ForeignKey(Users, null=False, on_delete=models.CASCADE)
+  creator = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
 
   def __str__(self):
     return self.uuid_id

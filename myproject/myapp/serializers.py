@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import Users, Types, Quizzes, Questions, Role
+from .models import User, Types, Quizzes, Questions, Role
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Users
+        model = User
         fields = ['id', 'username', 'email', 'role']
 
 
