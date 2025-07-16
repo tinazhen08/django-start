@@ -1,11 +1,11 @@
 <template>
     <div>
-        <h1 class="text-xl">Header</h1>
-        <h2 class="text-l">...</h2>
+        <NuxtLink to="/LogIn">Already have an account? Log In</NuxtLink>
     </div>
 </template>
 
 <script setup lang="ts">
+
 
 </script>
 
