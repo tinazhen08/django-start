@@ -17,11 +17,11 @@ import uuid
  """
 class User(AbstractUser):
   USER = 1
-  ADMIN = 2
+  SUPERVISOR = 2
 
-  ROLE_CHOICES = ((USER, 'user'), (ADMIN, 'admin'))
+  ROLE_CHOICES = ((USER, 'user'), (SUPERVISOR, 'supervisor'))
 
-  role = models.CharField(choices=ROLE_CHOICES, null=False)
+  role = models.CharField(choices=ROLE_CHOICES, null=False, default=(USER, 'user')) 
   username = models.CharField(max_length=255, null=False, unique=True) #text fields with max characters
   email = models.EmailField(null=False, unique=True)
   #password = models.CharField(max_length=255, null=False)
@@ -32,7 +32,7 @@ class User(AbstractUser):
   def __str__(self):
     return "{}".format(self.email)
 
-class Types(models.Model):
+""" class Types(models.Model):
   MULTIPLE_CHOICE = 1
   TRUE_OR_FALSE = 2 
   DROPDOWN = 3 #fill in the blank but without typing
@@ -44,23 +44,21 @@ class Types(models.Model):
   id = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, primary_key=True)
 
   def __str__(self):
-    return self.get_id_display()
+    return self.get_id_display() """
 
-class Quizzes(models.Model):
-  uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+class Quiz(models.Model):
   title = models.CharField(max_length=255, null=False)
-  types = models.ManyToManyField(Types)
+  types = models.JSONField(null=True)
   creator = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
 
   def __str__(self):
-    return self.uuid_id
+    return str(self.id)
 
-class Questions(models.Model):
-  uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+class Question(models.Model):
   question = models.CharField(max_length=255, null=False)
   answer = models.JSONField(default=list)
   incorrect = models.JSONField(default=list, null=True)
-  quiz = models.ForeignKey(Quizzes, null=False, on_delete=models.CASCADE)
+  quiz = models.ForeignKey(Quiz, null=False, on_delete=models.CASCADE)
 
   def __str__(self):
-    return self.uuid_id
+    return str(self.id)
