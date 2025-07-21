@@ -21,11 +21,11 @@ const loginForm = reactive<UserForm>({
 
 const errorMessage = ref<string>('')
 
-const config = useRuntimeConfig() // base url access = config.public.apiBase
+const config = useRuntimeConfig()
 
 async function handleLogin(){
-    const token = await $fetch((config.public.apiBase + "/api/token/"), {
-        method: 'POST',
+    const token = await $fetch(config.public.apiBase + "/api/token/", {
+        method: "POST",
         body: {
             email: loginForm.email, 
             password: loginForm.password,
@@ -34,7 +34,7 @@ async function handleLogin(){
     console.log(token);
 }
 
-onMounted( async () => {
+onMounted(async () => {
     await handleLogin();
 });
 </script>

@@ -18,7 +18,7 @@ class QuizSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Quiz
-        fields = ['id', 'title', 'types', 'creator']
+        fields = ['title', 'types', 'creator']
 
     def validate_types(self, value):
         valid_choices = [1, 2, 3, 4]
@@ -36,7 +36,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['id', 'question', 'answer', 'incorrect', 'quiz']
+        fields = ['question', 'answer', 'incorrect', 'quiz']
 
 """ class RoleSerializer(serializers.ModelSerializer):
     class Meta:
