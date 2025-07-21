@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import type { User } from '../composables/types.js'
 
 export const useStore = defineStore('user', () => {
     const user = ref<User | null>(null)
@@ -13,7 +12,6 @@ export const useStore = defineStore('user', () => {
 
     async function signUp(email: string, username: string, password: string) {
         errorMessage.value = ''
-
 
     }
 })

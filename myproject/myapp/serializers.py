@@ -11,15 +11,14 @@ TYPE_CHOICES = ((MULTIPLE_CHOICE, 'multiple choice'), (TRUE_OR_FALSE, ' true or 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'role']
+        fields = ['id', 'username', 'email', 'role', 'password']
 
 class QuizSerializer(serializers.ModelSerializer):
     #creator = UserSerializer(read_only=True)
 
     class Meta:
         model = Quiz
-        fields = ['title', 'types', 'creator']
-        read_only_fields = ['uuid_id']
+        fields = ['id', 'title', 'types', 'creator']
 
     def validate_types(self, value):
         valid_choices = [1, 2, 3, 4]
@@ -37,8 +36,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['question', 'answer', 'incorrect', 'quiz']
-        read_only_fields = ['uuid_id']
+        fields = ['id', 'question', 'answer', 'incorrect', 'quiz']
 
 """ class RoleSerializer(serializers.ModelSerializer):
     class Meta:
