@@ -1,12 +1,10 @@
 <template>
     <div>
-        
+
     </div>
 </template>
 
 <script setup lang="ts">
-const config = useRuntimeConfig()
-
 async function handleLogin(){
     const token = await $fetch(config.public.apiBase + "/api/token/", {
         method: "POST",

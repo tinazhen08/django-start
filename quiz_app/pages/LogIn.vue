@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form @sumbit.prevent="handleLogin()">
+        <form @sumbit.prevent="handleLogin">
             <input class="input mb-4 w-full" v-model="loginForm.email" type="email" placeholder="Email">
             <input class="input mb-4 w-full" v-model="loginForm.password" type="password" placeholder="Password">
             <button class="btn w-full" type="submit">Log In</button>
@@ -19,9 +19,7 @@ const loginForm = reactive<UserForm>({
   username: '',
 })
 
-const errorMessage = ref<string>('')
-
-const config = useRuntimeConfig()
+const errorMessage = ref('')
 
 async function handleLogin(){
     const token = await $fetch(config.public.apiBase + "/api/token/", {

@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useStore = defineStore('user', () => {
     const user = ref<User | null>(null)
     const isSignedIn = ref(false)
-    const errorMessage = ref<string>('')
+    const errorMessage = ref('')
 
     function signOut() {
         isSignedIn.value = false

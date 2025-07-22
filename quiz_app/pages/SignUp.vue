@@ -20,7 +20,7 @@ const signupForm = reactive<UserForm>({
   username: '',
 })
 
-const errorMessage = ref<string>('')
+const errorMessage = ref('')
 
 </script>
 
