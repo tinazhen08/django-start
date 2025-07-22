@@ -6,14 +6,14 @@
 
 <script setup lang="ts">
 async function handleLogin(){
-    const token = await $fetch(config.public.apiBase + "/api/token/", {
-        method: "POST",
-        body: {
+    const token = await requestEndpoint<{
+        access: string;
+        refresh: string;
+    }>("/api/token/", "POST", {
             email: 'admin@admin.com', 
             password: 'admin',
-        },
-    });
-    console.log(token);
+        })
+        console.log(token)
 }
 
 onMounted(async () => {
