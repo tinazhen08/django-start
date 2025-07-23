@@ -4,7 +4,7 @@
     <div>
       <ul class="space-y-3">
         <li v-for="(answer, index) in question.answer">
-          <label for="">Black {{ index + 1 }}</label>
+          <label for="">Blank {{ index + 1 }}</label>
           <select name="" id="" v-model="selectedAnswers[index]">
             <option value="" disabled>Please select an answer</option>
             <option
