@@ -19,9 +19,10 @@ export interface Question {
 }
 
 export interface Quiz {
-    id: number
+    id: number 
     title: string
     creator: string
-    //questions: Question[]
+    questions: Question[]
 }
+
 
